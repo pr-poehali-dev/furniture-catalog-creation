@@ -26,6 +26,24 @@ const MATERIALS  = ["Все", "Ткань", "Кожа", "Велюр", "МДФ", 
 const MAX_PRICE  = 250000;
 const fmt = (n: number) => n.toLocaleString("ru-RU") + " ₽";
 
+/* ── Данные калькулятора ────────────────────────────────────── */
+const CALC_TYPES = [
+  { id: "sofa",    label: "Диван",    base: 35000, img: "🛋️" },
+  { id: "kitchen", label: "Кухня",    base: 55000, img: "🍳" },
+  { id: "bedroom", label: "Спальня",  base: 40000, img: "🛏️" },
+  { id: "wardrobe",label: "Шкаф",     base: 22000, img: "🚪" },
+];
+const CALC_MATS = [
+  { id: "ldsp",    label: "ЛДСП",    coef: 1.0 },
+  { id: "mdf",     label: "МДФ",     coef: 1.3 },
+  { id: "wood",    label: "Дерево",  coef: 1.8 },
+  { id: "fabric",  label: "Ткань",   coef: 1.2 },
+  { id: "leather", label: "Кожа",    coef: 1.9 },
+  { id: "velvet",  label: "Велюр",   coef: 1.5 },
+  { id: "enamel",  label: "Эмаль",   coef: 1.4 },
+  { id: "glass",   label: "Стекло",  coef: 1.6 },
+];
+
 type CartItem = { id: number; name: string; price: number; image: string; qty: number };
 
 export default function Index() {
@@ -90,6 +108,7 @@ export default function Index() {
     { id: "home",        label: "Главная" },
     { id: "catalog",     label: "Каталог" },
     { id: "recommended", label: "Рекомендации" },
+    { id: "calculator",  label: "Калькулятор" },
     { id: "about",       label: "О нас" },
     { id: "contacts",    label: "Контакты" },
   ];
@@ -460,6 +479,9 @@ export default function Index() {
         </div>
       </section>
 
+      {/* ── CALCULATOR ───────────────────────────────────────────── */}
+      <PriceCalculator />
+
       {/* ── ABOUT ────────────────────────────────────────────────── */}
       <section id="about" className="py-16 sm:py-20 lg:py-24 bg-[#f9f9f8]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -570,6 +592,124 @@ export default function Index() {
         .animate-slide-up   { animation: slideUp 0.35s ease; }
       `}</style>
     </div>
+  );
+}
+
+/* ── Калькулятор цены ────────────────────────────────────────── */
+function PriceCalculator() {
+  const [type,   setType]   = useState(CALC_TYPES[0].id);
+  const [mat,    setMat]    = useState(CALC_MATS[0].id);
+  const [width,  setWidth]  = useState(200);
+  const [height, setHeight] = useState(220);
+  const [depth,  setDepth]  = useState(60);
+
+  const selectedType = CALC_TYPES.find(t => t.id === type)!;
+  const selectedMat  = CALC_MATS.find(m => m.id === mat)!;
+
+  /* Формула: база × коэф.материала × (объём / эталонный объём) */
+  const stdVol  = 200 * 220 * 60;
+  const curVol  = width * height * depth;
+  const sizeK   = Math.max(0.5, Math.min(3.5, curVol / stdVol));
+  const price   = Math.round(selectedType.base * selectedMat.coef * sizeK / 1000) * 1000;
+
+  return (
+    <section id="calculator" className="py-16 sm:py-20 lg:py-24 bg-[#f9f9f8]">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-10 sm:mb-12">
+          <p className="text-[10px] sm:text-xs tracking-[0.35em] uppercase text-[#aaa] mb-2">Подберите стоимость</p>
+          <h2 style={{ fontFamily: "'Cormorant', serif" }} className="text-3xl sm:text-4xl lg:text-5xl font-light">Калькулятор цены</h2>
+          <p className="text-[#888] text-sm mt-3">Укажите тип, материал и размеры — получите ориентировочную стоимость</p>
+        </div>
+
+        <div className="bg-white border border-[#e8e8e8] p-5 sm:p-8">
+
+          {/* Тип изделия */}
+          <div className="mb-7">
+            <p className="text-xs tracking-[0.25em] uppercase text-[#aaa] mb-3">Тип изделия</p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
+              {CALC_TYPES.map(t => (
+                <button
+                  key={t.id}
+                  onClick={() => setType(t.id)}
+                  className={`flex flex-col items-center gap-2 py-4 px-3 border transition-all ${type === t.id ? "bg-[#1a1a1a] text-white border-[#1a1a1a]" : "border-[#e8e8e8] text-[#555] hover:border-[#1a1a1a]"}`}
+                >
+                  <span className="text-2xl">{t.img}</span>
+                  <span className="text-xs tracking-wide">{t.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Материал */}
+          <div className="mb-7">
+            <p className="text-xs tracking-[0.25em] uppercase text-[#aaa] mb-3">Материал</p>
+            <div className="flex flex-wrap gap-2">
+              {CALC_MATS.map(m => (
+                <button
+                  key={m.id}
+                  onClick={() => setMat(m.id)}
+                  className={`px-3 sm:px-4 py-1.5 text-xs sm:text-sm border transition-all ${mat === m.id ? "bg-[#1a1a1a] text-white border-[#1a1a1a]" : "border-[#e0e0e0] text-[#888] hover:border-[#1a1a1a] hover:text-[#1a1a1a]"}`}
+                >
+                  {m.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Размеры */}
+          <div className="mb-8">
+            <p className="text-xs tracking-[0.25em] uppercase text-[#aaa] mb-4">Размеры (в сантиметрах)</p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+              {([
+                { label: "Ширина", icon: "MoveHorizontal", value: width,  set: setWidth,  min: 40,  max: 500 },
+                { label: "Высота", icon: "MoveVertical",   value: height, set: setHeight, min: 40,  max: 300 },
+                { label: "Глубина",icon: "Box",            value: depth,  set: setDepth,  min: 20,  max: 120 },
+              ] as const).map(dim => (
+                <div key={dim.label}>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs text-[#888] flex items-center gap-1.5">
+                      <Icon name={dim.icon} size={13} />
+                      {dim.label}
+                    </span>
+                    <span className="text-sm font-semibold text-[#1a1a1a]">{dim.value} см</span>
+                  </div>
+                  <input
+                    type="range"
+                    min={dim.min} max={dim.max} step={5}
+                    value={dim.value}
+                    onChange={e => (dim.set as (v: number) => void)(+e.target.value)}
+                    className="w-full h-1 appearance-none bg-[#e8e8e8] cursor-pointer accent-[#1a1a1a]"
+                  />
+                  <div className="flex justify-between text-[10px] text-[#ccc] mt-1">
+                    <span>{dim.min}</span><span>{dim.max}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Итог */}
+          <div className="border-t border-[#e8e8e8] pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <p className="text-xs text-[#aaa] mb-1">
+                {selectedType.label} · {selectedMat.label} · {width}×{height}×{depth} см
+              </p>
+              <p style={{ fontFamily: "'Cormorant', serif" }} className="text-4xl sm:text-5xl font-light text-[#1a1a1a]">
+                {fmt(price)}
+              </p>
+              <p className="text-[10px] text-[#bbb] mt-1">Ориентировочная стоимость. Точная цена — после замера.</p>
+            </div>
+            <a
+              href="tel:+79181300668"
+              className="shrink-0 flex items-center gap-2 bg-[#1a1a1a] text-white px-6 py-3.5 text-xs sm:text-sm tracking-widest uppercase hover:bg-[#333] transition-colors w-full sm:w-auto justify-center"
+            >
+              <Icon name="Phone" size={14} />
+              Заказать замер
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
