@@ -133,14 +133,14 @@ export default function Index() {
           <div className="flex items-center gap-3">
             {/* Instagram */}
             <a
-              href="https://www.instagram.com/kyxni_merta"
+              href="https://www.instagram.com/kuhni_merta"
               target="_blank"
               rel="noopener noreferrer"
               className="hidden md:flex items-center gap-1.5 text-xs tracking-wide transition-colors duration-300 hover:opacity-70"
               style={{ color: navText }}
             >
               <Icon name="Instagram" size={15} />
-              <span>kyxni_merta</span>
+              <span>kuhni_merta</span>
             </a>
 
             {/* Cart */}
@@ -229,9 +229,9 @@ export default function Index() {
                 {l.label}
               </button>
             ))}
-            <a href="https://www.instagram.com/kyxni_merta" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-6 py-3.5 text-sm text-[#555]">
+            <a href="https://www.instagram.com/kuhni_merta" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-6 py-3.5 text-sm text-[#555]">
               <Icon name="Instagram" size={15} />
-              kyxni_merta
+              kuhni_merta
             </a>
           </div>
         )}
@@ -282,13 +282,13 @@ export default function Index() {
 
         {/* Instagram badge */}
         <a
-          href="https://www.instagram.com/kyxni_merta"
+          href="https://www.instagram.com/kuhni_merta"
           target="_blank"
           rel="noopener noreferrer"
           className="absolute bottom-8 right-8 flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-white px-4 py-2.5 text-xs tracking-wide hover:bg-white/20 transition-all z-10"
         >
           <Icon name="Instagram" size={14} />
-          @kyxni_merta
+          @kuhni_merta
         </a>
 
         {/* Scroll hint */}
@@ -534,7 +534,7 @@ export default function Index() {
             {[
               { icon: "Phone",    label: "Телефон",   value: "+7 (918) 130-06-68", href: "tel:+79181300668" },
               { icon: "Mail",     label: "Email",     value: "vadimvodinov28@gmail.com", href: "mailto:vadimvodinov28@gmail.com" },
-              { icon: "Instagram",label: "Instagram", value: "@kyxni_merta", href: "https://www.instagram.com/kyxni_merta" },
+              { icon: "Instagram",label: "Instagram", value: "@kuhni_merta", href: "https://www.instagram.com/kuhni_merta" },
             ].map(c => (
               <a
                 key={c.label}
