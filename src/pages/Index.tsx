@@ -92,10 +92,10 @@ export default function Index() {
   ];
 
   /* nav bg: transparent → white */
-  const navBg    = `rgba(${scrolled > 0.5 ? "0,0,0" : "0,0,0"},${scrolled * 0.96})`;
-  const navBorder= `rgba(255,255,255,${scrolled * 0.1})`;
-  const navText  = "#ffffff";
-  const navSub   = scrolled > 0.3 ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.7)";
+  const navBg    = `rgba(248,248,246,${scrolled * 0.97})`;
+  const navBorder= `rgba(218,218,214,${scrolled})`;
+  const navText  = scrolled > 0.4 ? "#2a2a2a" : "#ffffff";
+  const navSub   = scrolled > 0.4 ? "#999" : "rgba(255,255,255,0.72)";
 
   return (
     <div className="min-h-screen bg-[#f9f9f8] text-[#1a1a1a]" style={{ fontFamily: "'Golos Text', sans-serif" }}>
