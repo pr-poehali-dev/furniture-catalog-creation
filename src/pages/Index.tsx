@@ -412,32 +412,32 @@ export default function Index() {
               <p className="mt-3 text-sm">Нет товаров по выбранным фильтрам</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
               {filtered.map((p, i) => (
                 <div key={p.id} className="group" style={{ animation: `fadeUp 0.5s ease both`, animationDelay: `${i * 0.05}s` }}>
-                  <div className="relative overflow-hidden bg-[#f5f5f4] aspect-[3/4] sm:aspect-[4/5]">
+                  <div className="relative overflow-hidden bg-[#f5f5f4] aspect-[3/4]">
                     <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     {p.tag && (
-                      <span className="absolute top-2 sm:top-3 left-2 sm:left-3 bg-[#1a1a1a] text-white text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 sm:py-1 tracking-widest uppercase">
+                      <span className="absolute top-2 left-2 bg-[#1a1a1a] text-white text-[8px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 tracking-widest uppercase">
                         {p.tag}
                       </span>
                     )}
-                    <span className="absolute top-2 sm:top-3 right-2 sm:right-3 bg-white/90 text-[#555] text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 sm:py-1">
+                    <span className="absolute top-2 right-2 bg-white/90 text-[#555] text-[8px] sm:text-[10px] px-1.5 sm:px-2 py-0.5">
                       {p.material}
                     </span>
                     <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <button onClick={() => addToCart(p)} className="w-full bg-white text-[#1a1a1a] py-2 sm:py-2.5 text-xs sm:text-sm tracking-wide hover:bg-[#f5f5f5] transition-colors">
+                      <button onClick={() => addToCart(p)} className="w-full bg-white text-[#1a1a1a] py-1.5 sm:py-2.5 text-[10px] sm:text-sm tracking-wide hover:bg-[#f5f5f5] transition-colors">
                         В корзину
                       </button>
                     </div>
                   </div>
-                  <div className="pt-2 sm:pt-4">
-                    <p className="text-[9px] sm:text-[10px] text-[#aaa] tracking-[0.2em] uppercase mb-0.5 sm:mb-1">{p.category}</p>
-                    <h3 style={{ fontFamily: "'Cormorant', serif" }} className="text-base sm:text-lg font-medium mb-1 leading-tight">{p.name}</h3>
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm sm:text-base font-semibold">{fmt(p.price)}</p>
-                      <button onClick={() => addToCart(p)} className="text-[#bbb] hover:text-[#1a1a1a] transition-colors p-1">
-                        <Icon name="Plus" size={16} />
+                  <div className="pt-2 sm:pt-3">
+                    <p className="text-[8px] sm:text-[10px] text-[#aaa] tracking-[0.15em] uppercase mb-0.5">{p.category}</p>
+                    <h3 style={{ fontFamily: "'Cormorant', serif" }} className="text-sm sm:text-lg font-medium mb-1 leading-tight line-clamp-2">{p.name}</h3>
+                    <div className="flex items-center justify-between gap-1">
+                      <p className="text-xs sm:text-base font-semibold">{fmt(p.price)}</p>
+                      <button onClick={() => addToCart(p)} className="text-[#bbb] hover:text-[#1a1a1a] transition-colors p-0.5 shrink-0">
+                        <Icon name="Plus" size={14} />
                       </button>
                     </div>
                   </div>
@@ -456,20 +456,20 @@ export default function Index() {
             <h2 style={{ fontFamily: "'Cormorant', serif" }} className="text-3xl sm:text-4xl lg:text-5xl font-light">Рекомендации</h2>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
             {[products[1], products[2], products[5], products[6]].map((p, i) => (
               <div key={p.id} className="group" style={{ animation: `fadeUp 0.5s ease both`, animationDelay: `${i * 0.1}s` }}>
-                <div className="relative overflow-hidden bg-[#f5f5f4] aspect-square mb-3 sm:mb-4">
+                <div className="relative overflow-hidden bg-[#f5f5f4] aspect-square mb-2 sm:mb-4">
                   <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  <div className="absolute top-2 sm:top-3 left-2 sm:left-3 bg-[#c8a97a] text-white text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 sm:py-1 tracking-widest uppercase">
+                  <div className="absolute top-2 left-2 bg-[#c8a97a] text-white text-[8px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 tracking-widest uppercase">
                     ★ Выбор
                   </div>
                 </div>
-                <p className="text-[9px] sm:text-[10px] text-[#aaa] tracking-[0.2em] uppercase mb-0.5 sm:mb-1">{p.category}</p>
-                <h3 style={{ fontFamily: "'Cormorant', serif" }} className="text-base sm:text-lg font-medium mb-2 leading-tight">{p.name}</h3>
-                <div className="flex items-center justify-between flex-wrap gap-2">
-                  <p className="text-sm sm:text-base font-semibold">{fmt(p.price)}</p>
-                  <button onClick={() => addToCart(p)} className="bg-[#1a1a1a] text-white px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs tracking-wide hover:bg-[#333] transition-colors">
+                <p className="text-[8px] sm:text-[10px] text-[#aaa] tracking-[0.15em] uppercase mb-0.5">{p.category}</p>
+                <h3 style={{ fontFamily: "'Cormorant', serif" }} className="text-sm sm:text-lg font-medium mb-1.5 leading-tight line-clamp-2">{p.name}</h3>
+                <div className="flex items-center justify-between gap-1 flex-wrap">
+                  <p className="text-xs sm:text-base font-semibold">{fmt(p.price)}</p>
+                  <button onClick={() => addToCart(p)} className="bg-[#1a1a1a] text-white px-2 sm:px-3 py-1 sm:py-1.5 text-[9px] sm:text-xs tracking-wide hover:bg-[#333] transition-colors">
                     + Корзина
                   </button>
                 </div>
