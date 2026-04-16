@@ -92,13 +92,13 @@ export default function Index() {
   ];
 
   /* nav bg: transparent → white */
-  const navBg    = `rgba(${scrolled > 0.5 ? "0,0,0" : "0,0,0"},${scrolled * 0.96})`;
-  const navBorder= `rgba(255,255,255,${scrolled * 0.1})`;
-  const navText  = "#ffffff";
-  const navSub   = scrolled > 0.3 ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.7)";
+  const navBg    = `rgba(244,242,239,${scrolled * 0.97})`;
+  const navBorder= `rgba(200,196,190,${scrolled})`;
+  const navText  = scrolled > 0.4 ? "#1c1c1c" : "#ffffff";
+  const navSub   = scrolled > 0.4 ? "#888" : "rgba(255,255,255,0.72)";
 
   return (
-    <div className="min-h-screen bg-[#111111] text-[#e8e8e8]" style={{ fontFamily: "'Golos Text', sans-serif" }}>
+    <div className="min-h-screen bg-[#f4f2ef] text-[#1c1c1c]" style={{ fontFamily: "'Golos Text', sans-serif" }}>
 
       {/* ── NAV ─────────────────────────────────────────────────── */}
       <header
@@ -149,9 +149,9 @@ export default function Index() {
                 onClick={() => setCartOpen(!cartOpen)}
                 className="relative flex items-center gap-2 px-4 py-2 text-sm tracking-wide transition-all duration-300 border"
                 style={{
-                  background: "rgba(255,255,255,0.12)",
+                  background: scrolled > 0.4 ? "#1c1c1c" : "rgba(255,255,255,0.15)",
                   color: "#ffffff",
-                  borderColor: "rgba(255,255,255,0.35)",
+                  borderColor: scrolled > 0.4 ? "#1c1c1c" : "rgba(255,255,255,0.4)",
                   backdropFilter: "blur(4px)",
                 }}
               >
@@ -165,11 +165,11 @@ export default function Index() {
               </button>
 
               {cartOpen && (
-                <div className="absolute right-0 top-full mt-2 w-96 bg-[#181818] border border-[#2a2a2a] shadow-2xl z-50 animate-fade-in">
+                <div className="absolute right-0 top-full mt-2 w-96 bg-white border border-[#dedad5] shadow-2xl z-50 animate-fade-in">
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-5">
                       <h3 style={{ fontFamily: "'Cormorant', serif" }} className="text-2xl font-light">Корзина</h3>
-                      <button onClick={() => setCartOpen(false)} className="text-[#666] hover:text-white transition-colors">
+                      <button onClick={() => setCartOpen(false)} className="text-[#aaa] hover:text-[#1c1c1c] transition-colors">
                         <Icon name="X" size={18} />
                       </button>
                     </div>
@@ -188,9 +188,9 @@ export default function Index() {
                                 <p className="text-sm font-medium truncate">{item.name}</p>
                                 <p className="text-[#888] text-xs mt-0.5">{fmt(item.price)}</p>
                                 <div className="flex items-center gap-2 mt-1.5">
-                                  <button onClick={() => changeQty(item.id, -1)} className="w-5 h-5 border border-[#333] flex items-center justify-center text-xs hover:border-white transition-colors">−</button>
+                                  <button onClick={() => changeQty(item.id, -1)} className="w-5 h-5 border border-[#dedad5] flex items-center justify-center text-xs hover:border-[#1c1c1c] transition-colors">−</button>
                                   <span className="text-sm w-4 text-center">{item.qty}</span>
-                                  <button onClick={() => changeQty(item.id, 1)} className="w-5 h-5 border border-[#333] flex items-center justify-center text-xs hover:border-white transition-colors">+</button>
+                                  <button onClick={() => changeQty(item.id, 1)} className="w-5 h-5 border border-[#dedad5] flex items-center justify-center text-xs hover:border-[#1c1c1c] transition-colors">+</button>
                                 </div>
                               </div>
                               <button onClick={() => removeFromCart(item.id)} className="text-[#ccc] hover:text-red-400 transition-colors shrink-0">
@@ -199,7 +199,7 @@ export default function Index() {
                             </div>
                           ))}
                         </div>
-                        <div className="mt-5 pt-4 border-t border-[#2a2a2a]">
+                        <div className="mt-5 pt-4 border-t border-[#ede9e4]">
                           <div className="flex justify-between text-sm mb-4">
                             <span className="text-[#888]">Итого:</span>
                             <span className="font-semibold text-base">{fmt(cartTotal)}</span>
@@ -308,12 +308,12 @@ export default function Index() {
             </div>
             <button
               onClick={() => setFilterOpen(!filterOpen)}
-              className="flex items-center gap-2 border border-[#333] px-4 py-2.5 text-sm text-[#aaa] hover:border-[#e8e8e8] hover:text-[#e8e8e8] transition-all"
+              className="flex items-center gap-2 border border-[#cdc9c3] px-4 py-2.5 text-sm text-[#888] hover:border-[#1c1c1c] hover:text-[#1c1c1c] transition-all"
             >
               <Icon name="SlidersHorizontal" size={15} />
               Фильтры
               {(filterCat !== "Все" || filterMat !== "Все" || priceRange[0] > 0 || priceRange[1] < MAX_PRICE) && (
-                <span className="w-2 h-2 bg-white rounded-full ml-1" />
+                <span className="w-2 h-2 bg-[#1c1c1c] rounded-full ml-1" />
               )}
             </button>
           </div>
