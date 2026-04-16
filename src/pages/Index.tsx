@@ -393,7 +393,7 @@ export default function Index() {
               <p className="mt-3 text-sm">Нет товаров по выбранным фильтрам</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
               {filtered.map((p, i) => (
                 <div key={p.id} className="group" style={{ animation: `fadeUp 0.5s ease both`, animationDelay: `${i * 0.05}s` }}>
                   <div className="relative overflow-hidden bg-[#f5f5f4] aspect-[3/4] sm:aspect-[4/5]">
