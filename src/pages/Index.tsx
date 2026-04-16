@@ -29,11 +29,18 @@ export default function Index() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [activeCategory, setActiveCategory] = useState("Все");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 150000]);
   const cartRef = useRef<HTMLDivElement>(null);
+
+  const minPrice = 0;
+  const maxPrice = 150000;
 
   const cartCount = cart.reduce((s, i) => s + i.qty, 0);
   const cartTotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  const filtered = activeCategory === "Все" ? products : products.filter(p => p.category === activeCategory);
+  const filtered = products.filter(p =>
+    (activeCategory === "Все" || p.category === activeCategory) &&
+    p.price >= priceRange[0] && p.price <= priceRange[1]
+  );
 
   const addToCart = (product: typeof products[0]) => {
     setCart(prev => {
@@ -214,7 +221,7 @@ export default function Index() {
             <p className="font-body text-sm text-[#aaa] hidden md:block">{filtered.length} позиций</p>
           </div>
 
-          <div className="flex flex-wrap gap-2 mb-10">
+          <div className="flex flex-wrap gap-2 mb-8">
             {categories.map(cat => (
               <button
                 key={cat}
@@ -224,6 +231,59 @@ export default function Index() {
                 {cat}
               </button>
             ))}
+          </div>
+
+          {/* PRICE RANGE SLIDER */}
+          <div className="mb-10 p-5 border border-[#e8e8e8] bg-white">
+            <div className="flex items-center justify-between mb-4">
+              <span className="font-body text-xs tracking-[0.2em] uppercase text-[#aaa]">Цена</span>
+              <span className="font-body text-sm text-[#1a1a1a] font-medium">
+                {fmt(priceRange[0])} — {fmt(priceRange[1])}
+              </span>
+            </div>
+            <div className="relative h-1 bg-[#e8e8e8] rounded-full">
+              <div
+                className="absolute h-1 bg-[#1a1a1a] rounded-full"
+                style={{
+                  left: `${(priceRange[0] / maxPrice) * 100}%`,
+                  right: `${100 - (priceRange[1] / maxPrice) * 100}%`,
+                }}
+              />
+              <input
+                type="range"
+                min={minPrice}
+                max={maxPrice}
+                step={1000}
+                value={priceRange[0]}
+                onChange={e => {
+                  const v = Number(e.target.value);
+                  if (v < priceRange[1]) setPriceRange([v, priceRange[1]]);
+                }}
+                className="absolute w-full h-1 opacity-0 cursor-pointer"
+                style={{ zIndex: priceRange[0] > maxPrice * 0.9 ? 5 : 3 }}
+              />
+              <input
+                type="range"
+                min={minPrice}
+                max={maxPrice}
+                step={1000}
+                value={priceRange[1]}
+                onChange={e => {
+                  const v = Number(e.target.value);
+                  if (v > priceRange[0]) setPriceRange([priceRange[0], v]);
+                }}
+                className="absolute w-full h-1 opacity-0 cursor-pointer"
+                style={{ zIndex: 4 }}
+              />
+              <div
+                className="absolute w-4 h-4 bg-white border-2 border-[#1a1a1a] rounded-full -top-1.5 -translate-x-1/2 shadow-sm pointer-events-none"
+                style={{ left: `${(priceRange[0] / maxPrice) * 100}%` }}
+              />
+              <div
+                className="absolute w-4 h-4 bg-white border-2 border-[#1a1a1a] rounded-full -top-1.5 -translate-x-1/2 shadow-sm pointer-events-none"
+                style={{ left: `${(priceRange[1] / maxPrice) * 100}%` }}
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
