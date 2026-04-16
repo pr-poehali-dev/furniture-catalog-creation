@@ -92,10 +92,10 @@ export default function Index() {
   ];
 
   /* nav bg: transparent → white */
-  const navBg    = `rgba(255,255,255,${scrolled * 0.97})`;
-  const navBorder= `rgba(232,232,232,${scrolled})`;
-  const navText  = scrolled > 0.3 ? "#1a1a1a" : "#ffffff";
-  const navSub   = scrolled > 0.3 ? "#888888" : "rgba(255,255,255,0.7)";
+  const navBg    = `rgba(${scrolled > 0.5 ? "0,0,0" : "0,0,0"},${scrolled * 0.96})`;
+  const navBorder= `rgba(255,255,255,${scrolled * 0.1})`;
+  const navText  = "#ffffff";
+  const navSub   = scrolled > 0.3 ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.7)";
 
   return (
     <div className="min-h-screen bg-[#f9f9f8] text-[#1a1a1a]" style={{ fontFamily: "'Golos Text', sans-serif" }}>
@@ -149,9 +149,9 @@ export default function Index() {
                 onClick={() => setCartOpen(!cartOpen)}
                 className="relative flex items-center gap-2 px-4 py-2 text-sm tracking-wide transition-all duration-300 border"
                 style={{
-                  background: scrolled > 0.5 ? "#1a1a1a" : "rgba(255,255,255,0.15)",
-                  color: scrolled > 0.5 ? "#ffffff" : "#ffffff",
-                  borderColor: scrolled > 0.5 ? "#1a1a1a" : "rgba(255,255,255,0.4)",
+                  background: "rgba(255,255,255,0.12)",
+                  color: "#ffffff",
+                  borderColor: "rgba(255,255,255,0.35)",
                   backdropFilter: "blur(4px)",
                 }}
               >
