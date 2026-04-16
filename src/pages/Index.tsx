@@ -92,13 +92,13 @@ export default function Index() {
   ];
 
   /* nav bg: transparent → white */
-  const navBg    = `rgba(244,242,239,${scrolled * 0.97})`;
-  const navBorder= `rgba(200,196,190,${scrolled})`;
-  const navText  = scrolled > 0.4 ? "#1c1c1c" : "#ffffff";
-  const navSub   = scrolled > 0.4 ? "#888" : "rgba(255,255,255,0.72)";
+  const navBg    = `rgba(${scrolled > 0.5 ? "0,0,0" : "0,0,0"},${scrolled * 0.96})`;
+  const navBorder= `rgba(255,255,255,${scrolled * 0.1})`;
+  const navText  = "#ffffff";
+  const navSub   = scrolled > 0.3 ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.7)";
 
   return (
-    <div className="min-h-screen bg-[#f4f2ef] text-[#1c1c1c]" style={{ fontFamily: "'Golos Text', sans-serif" }}>
+    <div className="min-h-screen bg-[#f9f9f8] text-[#1a1a1a]" style={{ fontFamily: "'Golos Text', sans-serif" }}>
 
       {/* ── NAV ─────────────────────────────────────────────────── */}
       <header
@@ -149,9 +149,9 @@ export default function Index() {
                 onClick={() => setCartOpen(!cartOpen)}
                 className="relative flex items-center gap-2 px-4 py-2 text-sm tracking-wide transition-all duration-300 border"
                 style={{
-                  background: scrolled > 0.4 ? "#1c1c1c" : "rgba(255,255,255,0.15)",
+                  background: "rgba(255,255,255,0.12)",
                   color: "#ffffff",
-                  borderColor: scrolled > 0.4 ? "#1c1c1c" : "rgba(255,255,255,0.4)",
+                  borderColor: "rgba(255,255,255,0.35)",
                   backdropFilter: "blur(4px)",
                 }}
               >
@@ -165,11 +165,11 @@ export default function Index() {
               </button>
 
               {cartOpen && (
-                <div className="absolute right-0 top-full mt-2 w-96 bg-white border border-[#dedad5] shadow-2xl z-50 animate-fade-in">
+                <div className="absolute right-0 top-full mt-2 w-96 bg-white border border-[#e8e8e8] shadow-2xl z-50 animate-fade-in">
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-5">
                       <h3 style={{ fontFamily: "'Cormorant', serif" }} className="text-2xl font-light">Корзина</h3>
-                      <button onClick={() => setCartOpen(false)} className="text-[#aaa] hover:text-[#1c1c1c] transition-colors">
+                      <button onClick={() => setCartOpen(false)} className="text-[#aaa] hover:text-[#1a1a1a] transition-colors">
                         <Icon name="X" size={18} />
                       </button>
                     </div>
@@ -188,9 +188,9 @@ export default function Index() {
                                 <p className="text-sm font-medium truncate">{item.name}</p>
                                 <p className="text-[#888] text-xs mt-0.5">{fmt(item.price)}</p>
                                 <div className="flex items-center gap-2 mt-1.5">
-                                  <button onClick={() => changeQty(item.id, -1)} className="w-5 h-5 border border-[#dedad5] flex items-center justify-center text-xs hover:border-[#1c1c1c] transition-colors">−</button>
+                                  <button onClick={() => changeQty(item.id, -1)} className="w-5 h-5 border border-[#e0e0e0] flex items-center justify-center text-xs hover:border-[#1a1a1a] transition-colors">−</button>
                                   <span className="text-sm w-4 text-center">{item.qty}</span>
-                                  <button onClick={() => changeQty(item.id, 1)} className="w-5 h-5 border border-[#dedad5] flex items-center justify-center text-xs hover:border-[#1c1c1c] transition-colors">+</button>
+                                  <button onClick={() => changeQty(item.id, 1)} className="w-5 h-5 border border-[#e0e0e0] flex items-center justify-center text-xs hover:border-[#1a1a1a] transition-colors">+</button>
                                 </div>
                               </div>
                               <button onClick={() => removeFromCart(item.id)} className="text-[#ccc] hover:text-red-400 transition-colors shrink-0">
@@ -199,7 +199,7 @@ export default function Index() {
                             </div>
                           ))}
                         </div>
-                        <div className="mt-5 pt-4 border-t border-[#ede9e4]">
+                        <div className="mt-5 pt-4 border-t border-[#e8e8e8]">
                           <div className="flex justify-between text-sm mb-4">
                             <span className="text-[#888]">Итого:</span>
                             <span className="font-semibold text-base">{fmt(cartTotal)}</span>
@@ -308,19 +308,19 @@ export default function Index() {
             </div>
             <button
               onClick={() => setFilterOpen(!filterOpen)}
-              className="flex items-center gap-2 border border-[#cdc9c3] px-4 py-2.5 text-sm text-[#888] hover:border-[#1c1c1c] hover:text-[#1c1c1c] transition-all"
+              className="flex items-center gap-2 border border-[#e0e0e0] px-4 py-2.5 text-sm text-[#555] hover:border-[#1a1a1a] hover:text-[#1a1a1a] transition-all"
             >
               <Icon name="SlidersHorizontal" size={15} />
               Фильтры
               {(filterCat !== "Все" || filterMat !== "Все" || priceRange[0] > 0 || priceRange[1] < MAX_PRICE) && (
-                <span className="w-2 h-2 bg-[#1c1c1c] rounded-full ml-1" />
+                <span className="w-2 h-2 bg-[#1a1a1a] rounded-full ml-1" />
               )}
             </button>
           </div>
 
           {/* FILTER PANEL */}
           {filterOpen && (
-            <div className="mb-10 border border-[#2a2a2a] bg-[#181818] p-6 animate-fade-in">
+            <div className="mb-10 border border-[#e8e8e8] bg-white p-6 animate-fade-in">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
                 {/* Category */}
@@ -331,7 +331,7 @@ export default function Index() {
                       <button
                         key={c}
                         onClick={() => setFilterCat(c)}
-                        className={`px-4 py-1.5 text-sm border transition-all ${filterCat === c ? "bg-white text-[#111] border-white" : "border-[#333] text-[#888] hover:border-[#aaa] hover:text-[#e8e8e8]"}`}
+                        className={`px-4 py-1.5 text-sm border transition-all ${filterCat === c ? "bg-[#1a1a1a] text-white border-[#1a1a1a]" : "border-[#e0e0e0] text-[#888] hover:border-[#1a1a1a] hover:text-[#1a1a1a]"}`}
                       >
                         {c}
                       </button>
@@ -347,7 +347,7 @@ export default function Index() {
                       <button
                         key={m}
                         onClick={() => setFilterMat(m)}
-                        className={`px-4 py-1.5 text-sm border transition-all ${filterMat === m ? "bg-white text-[#111] border-white" : "border-[#333] text-[#888] hover:border-[#aaa] hover:text-[#e8e8e8]"}`}
+                        className={`px-4 py-1.5 text-sm border transition-all ${filterMat === m ? "bg-[#1a1a1a] text-white border-[#1a1a1a]" : "border-[#e0e0e0] text-[#888] hover:border-[#1a1a1a] hover:text-[#1a1a1a]"}`}
                       >
                         {m}
                       </button>
@@ -359,11 +359,11 @@ export default function Index() {
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <p className="text-xs tracking-[0.25em] uppercase text-[#aaa]">Цена</p>
-                    <p className="text-sm text-[#e8e8e8] font-medium">{fmt(priceRange[0])} — {fmt(priceRange[1])}</p>
+                    <p className="text-sm text-[#1a1a1a] font-medium">{fmt(priceRange[0])} — {fmt(priceRange[1])}</p>
                   </div>
-                  <div className="relative h-1 bg-[#333] rounded-full mt-6">
+                  <div className="relative h-1 bg-[#e8e8e8] rounded-full mt-6">
                     <div
-                      className="absolute h-1 bg-white rounded-full"
+                      className="absolute h-1 bg-[#1a1a1a] rounded-full"
                       style={{
                         left: `${(priceRange[0] / MAX_PRICE) * 100}%`,
                         right: `${100 - (priceRange[1] / MAX_PRICE) * 100}%`,
@@ -381,18 +381,18 @@ export default function Index() {
                       className="absolute w-full h-1 opacity-0 cursor-pointer"
                       style={{ zIndex: 4 }}
                     />
-                    <div className="absolute w-4 h-4 bg-[#111] border-2 border-white rounded-full -top-1.5 -translate-x-1/2 shadow pointer-events-none" style={{ left: `${(priceRange[0] / MAX_PRICE) * 100}%` }} />
-                    <div className="absolute w-4 h-4 bg-[#111] border-2 border-white rounded-full -top-1.5 -translate-x-1/2 shadow pointer-events-none" style={{ left: `${(priceRange[1] / MAX_PRICE) * 100}%` }} />
+                    <div className="absolute w-4 h-4 bg-white border-2 border-[#1a1a1a] rounded-full -top-1.5 -translate-x-1/2 shadow pointer-events-none" style={{ left: `${(priceRange[0] / MAX_PRICE) * 100}%` }} />
+                    <div className="absolute w-4 h-4 bg-white border-2 border-[#1a1a1a] rounded-full -top-1.5 -translate-x-1/2 shadow pointer-events-none" style={{ left: `${(priceRange[1] / MAX_PRICE) * 100}%` }} />
                   </div>
                 </div>
               </div>
 
               {/* Reset */}
-              <div className="flex items-center justify-between mt-6 pt-5 border-t border-[#2a2a2a]">
-                <p className="text-sm text-[#aaa]">Найдено: <span className="text-white font-medium">{filtered.length}</span> товаров</p>
+              <div className="flex items-center justify-between mt-6 pt-5 border-t border-[#f0f0f0]">
+                <p className="text-sm text-[#aaa]">Найдено: <span className="text-[#1a1a1a] font-medium">{filtered.length}</span> товаров</p>
                 <button
                   onClick={() => { setFilterCat("Все"); setFilterMat("Все"); setPriceRange([0, MAX_PRICE]); }}
-                  className="text-sm text-[#888] hover:text-white transition-colors underline underline-offset-2"
+                  className="text-sm text-[#888] hover:text-[#1a1a1a] transition-colors underline underline-offset-2"
                 >
                   Сбросить фильтры
                 </button>
@@ -410,7 +410,7 @@ export default function Index() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {filtered.map((p, i) => (
                 <div key={p.id} className="group" style={{ animation: `fadeUp 0.5s ease both`, animationDelay: `${i * 0.06}s` }}>
-                  <div className="relative overflow-hidden bg-[#1e1e1e] aspect-[4/5]">
+                  <div className="relative overflow-hidden bg-[#f5f5f4] aspect-[4/5]">
                     <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     {p.tag && (
                       <span className="absolute top-3 left-3 bg-[#1a1a1a] text-white text-[10px] px-2 py-1 tracking-widest uppercase">
@@ -431,7 +431,7 @@ export default function Index() {
                     <h3 style={{ fontFamily: "'Cormorant', serif" }} className="text-lg font-medium mb-1">{p.name}</h3>
                     <div className="flex items-center justify-between">
                       <p className="text-base font-semibold">{fmt(p.price)}</p>
-                      <button onClick={() => addToCart(p)} className="text-[#666] hover:text-white transition-colors">
+                      <button onClick={() => addToCart(p)} className="text-[#bbb] hover:text-[#1a1a1a] transition-colors">
                         <Icon name="Plus" size={18} />
                       </button>
                     </div>
@@ -444,7 +444,7 @@ export default function Index() {
       </section>
 
       {/* ── RECOMMENDED ──────────────────────────────────────────── */}
-      <section id="recommended" className="py-24 bg-[#161616]">
+      <section id="recommended" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-14">
             <p className="text-xs tracking-[0.35em] uppercase text-[#aaa] mb-2">Специально для вас</p>
@@ -454,7 +454,7 @@ export default function Index() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[products[1], products[2], products[5], products[6]].map((p, i) => (
               <div key={p.id} className="group" style={{ animation: `fadeUp 0.5s ease both`, animationDelay: `${i * 0.1}s` }}>
-                <div className="relative overflow-hidden bg-[#1e1e1e] aspect-square mb-4">
+                <div className="relative overflow-hidden bg-[#f5f5f4] aspect-square mb-4">
                   <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute top-3 left-3 bg-[#c8a97a] text-white text-[10px] px-2 py-1 tracking-widest uppercase">
                     ★ Выбор редакции
@@ -464,7 +464,7 @@ export default function Index() {
                 <h3 style={{ fontFamily: "'Cormorant', serif" }} className="text-lg font-medium mb-2">{p.name}</h3>
                 <div className="flex items-center justify-between">
                   <p className="font-semibold">{fmt(p.price)}</p>
-                  <button onClick={() => addToCart(p)} className="bg-white text-[#111] px-3 py-1.5 text-xs tracking-wide hover:bg-[#e0e0e0] transition-colors">
+                  <button onClick={() => addToCart(p)} className="bg-[#1a1a1a] text-white px-3 py-1.5 text-xs tracking-wide hover:bg-[#333] transition-colors">
                     + В корзину
                   </button>
                 </div>
@@ -475,7 +475,7 @@ export default function Index() {
       </section>
 
       {/* ── ABOUT ────────────────────────────────────────────────── */}
-      <section id="about" className="py-24 bg-[#111111]">
+      <section id="about" className="py-24 bg-[#f9f9f8]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -483,11 +483,11 @@ export default function Index() {
               <h2 style={{ fontFamily: "'Cormorant', serif" }} className="text-4xl md:text-5xl font-light mb-8 leading-tight">
                 Мебель, которая<br />создаётся с душой
               </h2>
-              <p className="text-[#999] leading-relaxed mb-5 text-sm">
+              <p className="text-[#555] leading-relaxed mb-5 text-sm">
                 MERTA — мебельная компания, основанная с одной целью: создавать пространства, в которых хочется жить.
                 Мы производим мебель на заказ — кухни, диваны, шкафы, спальни — с вниманием к каждой детали.
               </p>
-              <p className="text-[#999] leading-relaxed mb-8 text-sm">
+              <p className="text-[#555] leading-relaxed mb-8 text-sm">
                 Каждое изделие проходит многоэтапный контроль качества. Мы работаем только с проверенными материалами
                 и партнёрами, чтобы результат радовал вас долгие годы.
               </p>
@@ -495,15 +495,15 @@ export default function Index() {
               <div className="grid grid-cols-3 gap-6 mb-10">
                 {[["7+", "лет на рынке"], ["1 200+", "выполненных проектов"], ["98%", "довольных клиентов"]].map(([n, l]) => (
                   <div key={l}>
-                    <p style={{ fontFamily: "'Cormorant', serif" }} className="text-3xl font-light text-white">{n}</p>
+                    <p style={{ fontFamily: "'Cormorant', serif" }} className="text-3xl font-light text-[#1a1a1a]">{n}</p>
                     <p className="text-xs text-[#aaa] mt-1">{l}</p>
                   </div>
                 ))}
               </div>
 
               {/* Founder */}
-              <div className="flex items-center gap-4 p-4 border border-[#2a2a2a] bg-[#1a1a1a]">
-                <div className="w-12 h-12 bg-[#2a2a2a] rounded-full flex items-center justify-center shrink-0">
+              <div className="flex items-center gap-4 p-4 border border-[#e8e8e8] bg-white">
+                <div className="w-12 h-12 bg-[#e8e8e8] rounded-full flex items-center justify-center shrink-0">
                   <Icon name="User" size={20} />
                 </div>
                 <div>
@@ -515,8 +515,8 @@ export default function Index() {
 
             <div className="relative">
               <img src={IMG_BEDROOM} alt="О нас" className="w-full aspect-[4/5] object-cover" />
-              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-[#1e1e1e] -z-10" />
-              <div className="absolute -top-4 -right-4 w-20 h-20 border border-[#333] -z-10" />
+              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-[#f0ebe3] -z-10" />
+              <div className="absolute -top-4 -right-4 w-20 h-20 border border-[#e0d8cc] -z-10" />
             </div>
           </div>
         </div>
